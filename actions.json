@@ -1,0 +1,18 @@
+{
+    "{dat_path}": [
+        {
+            "action": "LoadDatFile",
+            "class_name": "seeds.nointro.dat.NoIntroDat"
+        },
+        {
+            "action": "DeleteOld"
+        },
+        {
+            "action": "Copy",
+            "folder": "DatRoot"
+        },
+        {
+            "action": "SaveToDatabase"
+        }
+    ]
+}
