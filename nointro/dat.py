@@ -3,8 +3,8 @@
 """
 import re
 import os
-from repositories.dat import ClrMameProDatFile, XMLDatFile
-from commands import config
+from datero.repositories.dat import ClrMameProDatFile, XMLDatFile
+from datero.commands import config
 
 
 class NoIntroDat(XMLDatFile):
