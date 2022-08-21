@@ -3,8 +3,8 @@
 """
 import re
 import os
-from lib.dat import ClrMameProDatFile, XMLDatFile
-from lib import Settings
+from repositories.dat import ClrMameProDatFile, XMLDatFile
+from commands import config
 
 
 class NoIntroDat(XMLDatFile):
@@ -36,9 +36,9 @@ class NoIntroDat(XMLDatFile):
         if name_array[0] == 'Source Code':
             preffixes.append(name_array.pop(0))
             self.modifier = 'Source Code'
-
+        union = config.get('GENERAL', 'UnionCharacter')
         if len(name_array) > 2:
-            name_array[1] = f'{name_array[1]} {Settings.UNION_CHARACTER} {name_array.pop()}'
+            name_array[1] = f'{name_array[1]} {union} {name_array.pop()}'
 
         if len(name_array) == 1:
             name_array.insert(0, None)
@@ -53,7 +53,10 @@ class NoIntroDat(XMLDatFile):
         find_system = self.overrides()
         self.extra_configs(find_system)
 
-        self.preffix = Settings.Preffixes.get(self.modifier or self.system_type, '')
+        if self.modifier or self.system_type:
+            self.preffix = config.get('PREFFIXES', self.modifier or self.system_type, fallback='')
+        else:
+            self.preffix = None
 
         return [self.preffix, self.company, self.system, self.suffix, self.get_date()]
 
