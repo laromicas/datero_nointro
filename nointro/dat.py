@@ -9,7 +9,7 @@ from datero.commands import config
 
 class NoIntroDat(XMLDatFile):
     """ NoIntro Dat class. """
-    repo: str = 'nointro'
+    seed: str = 'nointro'
 
     def initial_parse(self) -> list:
         """ Parse the dat file. """
