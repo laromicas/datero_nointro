@@ -2,7 +2,7 @@
     "{dat_path}": [
         {
             "action": "LoadDatFile",
-            "class_name": "seeds.nointro.nointro.dat.NoIntroDat"
+            "class_name": "datero.seeds.nointro.nointro.dat.NoIntroDat"
         },
         {
             "action": "DeleteOld"
