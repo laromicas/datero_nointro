@@ -33,20 +33,14 @@ def is_download_finished() -> bool:
     firefox_temp_file = sorted(Path(TMP_FOLDER).glob('*.part'))
     chrome_temp_file = sorted(Path(TMP_FOLDER).glob('*.crdownload'))
     downloaded_files = sorted(Path(TMP_FOLDER).glob('*.*'))
-    if (len(firefox_temp_file) == 0) and \
+    return (len(firefox_temp_file) == 0) and \
        (len(chrome_temp_file) == 0) and \
-       (len(downloaded_files) >= 1):
-        return True
-    else:
-        return False
+       (len(downloaded_files) >= 1)
 
 
 def downloads_disabled(driver) -> bool:
     words = ['temporary suspended', 'temporary disabled']
-    for word in words:
-        if word in driver.page_source:
-            return True
-    return False
+    return any(word in driver.page_source for word in words)
 
 def download_daily():
     options = FirefoxOptions()

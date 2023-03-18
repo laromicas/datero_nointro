@@ -4,7 +4,7 @@
 import re
 import os
 from datero.repositories.dat import ClrMameProDatFile, XMLDatFile
-from datero.commands import config
+from datero.configuration import config
 
 
 class NoIntroDat(XMLDatFile):
@@ -94,7 +94,7 @@ class NoIntroClrMameDat(ClrMameProDatFile):
 
         self.suffixes = suffixes
 
-        self.preffix = Settings.Preffixes.get(self.modifier or self.system_type, '')
+        self.preffix = config['PREFFIXES'].get(self.modifier or self.system_type, '')
 
         return [self.preffix, self.company, self.system, self.suffix, self.get_date()]
 

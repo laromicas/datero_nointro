@@ -12,12 +12,14 @@ SEED_NAME = os.getenv('SEED_NAME', os.path.basename(os.getcwd()))
 TMP_DIR = os.path.join(WORK_FOLDER, os.getenv('TMP_FOLDER', 'tmp'))
 TMP_NOINTRO = os.path.join(TMP_DIR, SEED_NAME)
 TMP_DATS = os.path.join(TMP_NOINTRO, 'dats')
+HISTORY = os.path.join(TMP_NOINTRO, 'history')
 MAIN_URL = 'http://datomatic.org'
 
 def mktmpdirs():
     os.makedirs(TMP_DIR, exist_ok=True)
     os.makedirs(TMP_NOINTRO, exist_ok=True)
     os.makedirs(TMP_DATS, exist_ok=True)
+    os.makedirs(HISTORY, exist_ok=True)
 
 
 def clean():
@@ -30,8 +32,8 @@ def main():
         download_daily()
     download_dats()
 
-    os.system(f'cd {TMP_DATS} && cp ../*.zip . && unzip -o \'*.zip\' && rm *.zip')
-    os.system(f'cd {TMP_NOINTRO} && mv *.zip history/')
+    os.system(f'cd {TMP_DATS} && cp ../*.zip . && unzip -jo \'*.zip\' && rm *.zip')
+    os.system(f'cd {TMP_NOINTRO} && mv *.zip {HISTORY}')
 
     # zip files in TMP_DIR with 7z
     print('Zipping files')

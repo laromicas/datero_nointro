@@ -23,10 +23,13 @@ Installation
 
 Download the code and install requirements (recommended to use a virtual
 environment)
+You must install geckodriver and add it to your PATH.
+You need to install firefox and add it to your PATH.
 
 .. code-block:: bash
 
    $ datero seed install nointro
+
 
 Usage
 -----
