@@ -1,0 +1,20 @@
+[
+    {
+        "name": "No-Intro DAT",
+        "class_name": "datero.seeds.nointro.nointro.dat.NoIntroDat",
+        "seed": "nointro",
+        "priority": 50,
+        "rules": [
+            {
+                "key": "url",
+                "operator": "contains",
+                "value": "www.no-intro.org"
+            },
+            {
+                "key": "homepage",
+                "operator": "eq",
+                "value": "No-Intro"
+            }
+        ]
+    }
+]
