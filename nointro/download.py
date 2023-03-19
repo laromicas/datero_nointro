@@ -77,9 +77,15 @@ def download_daily():
         daily_link.click()
 
         sleep_time()
+        aftermarket = driver.find_element(By.CSS_SELECTOR, "input[name='include_additional']")
+        if not aftermarket.is_selected():
+            aftermarket.click()
 
+        sleep_time()
         driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
         prepare_button = driver.find_element(By.CSS_SELECTOR, "form[name='daily'] input[type='submit']")
+
+
 
         sleep_time()
         prepare_button.click()
