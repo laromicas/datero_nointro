@@ -26,7 +26,7 @@ def execute_with_retry(method, max_attempts):
 
 
 def sleep_time():
-    time.sleep(random.randint(1, 6))
+    time.sleep(random.random() * 3 + 4)
 
 
 def is_download_finished() -> bool:
