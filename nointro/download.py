@@ -1,5 +1,7 @@
+""" Downloads the No-Intro Datomatic Love Pack. """
 from pathlib import Path
 import os
+import sys
 import time
 import random
 
@@ -7,29 +9,33 @@ from selenium import webdriver
 from selenium.webdriver import FirefoxOptions
 from selenium.webdriver.common.by import By
 
-
 WORK_FOLDER = os.getenv('WORK_FOLDER', os.getcwd())
 SEED_NAME = os.getenv('SEED_NAME', os.path.basename(os.getcwd()))
 TMP_DIR = os.path.join(WORK_FOLDER, os.getenv('TMP_FOLDER', 'tmp'))
 TMP_FOLDER = os.path.join(TMP_DIR, SEED_NAME)
 
+
 def execute_with_retry(method, max_attempts):
-    e = None
-    for i in range(0, max_attempts):
+    """Executes a method with several times until it fails all or is executed fine."""
+    exc = None
+    for _ in range(0, max_attempts):
         try:
             return method()
-        except Exception as e:
-            print(e)
+        except Exception as exc:
+            print(exc)
             time.sleep(1)
-    if e is not None:
-        raise e
+    if exc is not None:
+        raise exc
+    return None
 
 
 def sleep_time():
+    """Sleeps for a random time."""
     time.sleep(random.random() * 3 + 4)
 
 
 def is_download_finished() -> bool:
+    """Checks if the download is finished."""
     firefox_temp_file = sorted(Path(TMP_FOLDER).glob('*.part'))
     chrome_temp_file = sorted(Path(TMP_FOLDER).glob('*.crdownload'))
     downloaded_files = sorted(Path(TMP_FOLDER).glob('*.*'))
@@ -39,10 +45,13 @@ def is_download_finished() -> bool:
 
 
 def downloads_disabled(driver) -> bool:
+    """Checks if the downloads in Datomatic are disabled."""
     words = ['temporary suspended', 'temporary disabled']
     return any(word in driver.page_source for word in words)
 
+
 def download_daily():
+    """Downloads the Datomatic Love Pack."""
     options = FirefoxOptions()
     # options.add_argument("--headless")
     options.set_capability("marionette", True)
@@ -66,7 +75,7 @@ def download_daily():
         if downloads_disabled(driver):
             print("Downloads suspended")
             driver.close()
-            exit(1)
+            sys.exit(1)
 
         # driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS)
         download_button = driver.find_element(By.XPATH, "//a[contains(text(), 'Download')]")
@@ -98,8 +107,8 @@ def download_daily():
             print("Waiting for download to finish")
             time.sleep(10)
 
-    except Exception as e:
-        print(e)
+    except Exception as exc:
+        print(exc)
 
     driver.close()
 
